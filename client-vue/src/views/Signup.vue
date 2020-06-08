@@ -26,6 +26,10 @@
                     <p class="form__error">Le password non coincidono</p>
                 </div>
 
+                <div class="form__group" v-if="error">
+                    <p class="form__error">{{ error }}</p>
+                </div>
+
                 <div class="form__group u-center-text">
                     <button class="btn btn--primary" type="submit">SignUp</button>
                 </div>
@@ -44,6 +48,7 @@ export default {
             email: '',
             password: '',
             passwordAgain: '',
+            error: ''
         }
     },
 
@@ -64,7 +69,15 @@ export default {
             this.auth_request({
                 email: this.email,
                 password: this.password
-            }).then(() => this.$router.push('/dashboard') )
+            })
+            .then((msg) => {
+                console.log(msg)
+                this.$router.push('/dashboard')
+            })
+            .catch( err => {
+                console.log(err)
+                this.error = err.msg
+            })
         }
     }
 }

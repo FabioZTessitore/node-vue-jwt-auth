@@ -12,7 +12,7 @@ const getters = {
     user: state => state.user
 };
 
-const mutuations = {
+const mutations = {
     auth_request: (state) => {
         state.status = 'loading'
         state.token = ''
@@ -45,15 +45,22 @@ const actions = {
 
           console.log('/signup', user)
           
-          Vue.http.get('/signup', user)
+          Vue.http.post('/signup', user)
           .then(response => {
+            console.log('response', response)
             return response.json()
           })
           .then(data => {
-            console.log('signup response', data)
+            console.log('json response', data)
             commit('auth_success', { token: 1, user: '' })
+            resolve('ok')
           })
-          resolve() || reject()
+          .catch( err => {
+            commit('auth_error')
+            reject(err.body)
+          })
+          
+          
           /*axios({
             url: action,
             data: user,
@@ -86,6 +93,6 @@ const actions = {
 export default {
     store,
     getters,
-    mutuations,
+    mutations,
     actions
 };
