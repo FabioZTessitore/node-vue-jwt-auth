@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import Signup from './components/Signup.vue'
+import Signup from './views/Signup.vue'
+import Login from './views/Login.vue'
 import Secure from './components/Secure.vue'
-import Login from './components/Login.vue'
 
-import store from './store'
+import store from './store/store'
 
 const ifAuthenticated = (to, from, next) => {
   if (store.getters.isLoggedIn) {
@@ -28,8 +28,8 @@ export default new Router({
       component: Home
     },
     {
-      path: '/register',
-      name: 'register',
+      path: '/signup',
+      name: 'signup',
       component: Signup
     },
     {

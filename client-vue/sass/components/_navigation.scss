@@ -1,0 +1,29 @@
+.nav {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 6rem;
+    background-color: $color-grey-light;
+    padding: 1rem 2rem;
+
+    .brand {
+        margin-right: auto;
+    }
+
+    .menu {
+        display: flex;
+        justify-content: space-between;
+        width: 10%;
+    }
+
+    &__link {
+        &:link,
+        &:visited {
+            text-decoration: none;
+            color: $color-text-dark;
+        }
+    }
+
+    &__link.router-link-exact-active {
+        color: $color-menu-active;
+    }
+}

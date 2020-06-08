@@ -13,7 +13,7 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
     data () {
@@ -32,7 +32,8 @@ export default {
     methods: {
         load () {
             return new Promise( (resolve) => {
-                axios({
+                resolve()
+                /*axios({
                     url: '/secure-data',
                     method: 'GET'
                 }).then( (resp) => {
@@ -42,7 +43,7 @@ export default {
                     resolve(resp)
                 }).catch( (err) => {
                     console.log('catch', err)
-                })
+                })*/
             })
         }
     }

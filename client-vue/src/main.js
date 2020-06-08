@@ -1,17 +1,16 @@
 import Vue from 'vue'
+import VueResource from 'vue-resource'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import store from './store/store'
 
-import axios from 'axios'
+Vue.use(VueResource);
 
 Vue.config.productionTip = false
 
-Vue.prototype.$http = axios
-
 const token = localStorage.getItem('user-token')
 if (token) {
-  axios.defaults.headers.common['Authorization'] = token
+  //axios.defaults.headers.common['Authorization'] = token
 }
 
 new Vue({
