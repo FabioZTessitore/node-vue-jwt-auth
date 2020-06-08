@@ -11,11 +11,13 @@ export default new Vuex.Store({
     token: localStorage.getItem('user-token') || '',
     user: {}
   },
+
   getters: {
     isLoggedIn: state => !!state.token,
     authStatus: state => state.status,
     user: state => state.user
   },
+
   mutations: {
     auth_request: (state) => {
       state.status = 'loading'
@@ -39,6 +41,7 @@ export default new Vuex.Store({
       state.user = {}
     }
   },
+
   actions: {
     'auth_request': ({ commit }, { action, user }) => {
       return new Promise((resolve, reject) => {

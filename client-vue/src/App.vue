@@ -34,7 +34,7 @@ export default {
   created () {
     axios.interceptors.response.use(undefined, (err) => {
       const res = err.response
-      return new Promise((resolve, reject) => {
+      return new Promise(() => {
         if (res.status === 401 && res.config && !res.config.__isRetryRequest) {
           console.log('logout please')
           this.$store.dispatch('auth_logout')
@@ -44,6 +44,10 @@ export default {
         throw err
       })
     })
+
+    if (this.isLoggedIn) {
+      console.log('sei loggato ma non so chi sei')
+    }
   }
 }
 </script>
