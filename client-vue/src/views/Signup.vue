@@ -66,10 +66,10 @@ export default {
         signup () {
             if (this.errorMatch) return
 
-            this.auth_request({
+            this.auth_request({ action: '/signup', user: {
                 email: this.email,
                 password: this.password
-            })
+            }})
             .then((msg) => {
                 console.log(msg)
                 this.$router.push('/dashboard')

@@ -2,7 +2,7 @@
     <div>
         <h1>This page is protected by auth</h1>
 
-        <p>You are {{ user }}</p>
+        <p>You are {{ foo }}</p>
 
         <button @click="load">Click to load secure data</button>
         <p>{{ msg }}</p>
@@ -24,9 +24,9 @@ export default {
     },
 
     computed: {
-        ...mapGetters([
-            'user'
-        ])
+        ...mapGetters({
+            foo: 'user'
+        })
     },
 
     methods: {
@@ -46,6 +46,10 @@ export default {
                 })*/
             })
         }
+    },
+
+    created () {
+        console.log(this.foo)
     }
 }
 </script>

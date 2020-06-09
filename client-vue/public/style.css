@@ -139,6 +139,12 @@ body {
   .nav__link.router-link-exact-active {
     color: #42b983; }
 
+.login-form {
+  width: 40%;
+  margin: 0 auto;
+  background-color: #eee;
+  padding: 4rem 6rem; }
+
 .signup-form {
   width: 40%;
   margin: 0 auto;

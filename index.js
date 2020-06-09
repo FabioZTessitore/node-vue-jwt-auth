@@ -1,11 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const jwt = require('jsonwebtoken');
 
-const User = require('./app/models/user');
-
-const config = require('./app/config');
 const middleware = require('./app/middleware');
 
 const userRoutes = require('./app/routes/user');
@@ -26,25 +22,6 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
     }
 
     app.listen(process.env.PORT || 3000);
-});
-
-
-
-app.post('/login', function (req, res) {
-    const email = req.body.email;
-    const password  = req.body.password;
-    
-    User.findOne({ 'email': email }, function(err, user) {
-        if (err) return res.status(500).send({ auth: false, token: null, message: 'Server Error' });
-
-        if (!user) return res.status(404).send({ auth: false, token: null, message: 'Cannot find user' });
-
-        let passwordIsValid = user.validPassword(password);
-        if (!passwordIsValid) return res.status(401).send({ auth: false, token: null, message: 'Invalid password' });
-
-        const token = jwt.sign({ id: user._id }, config.secret, { expiresIn: 3600 /* 1h */ });
-        res.status(200).send({ auth: true, token: token, user: user });
-    });
 });
 
 app.get('/', function (req, res) {
