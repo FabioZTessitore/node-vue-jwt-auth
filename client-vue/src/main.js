@@ -8,11 +8,11 @@ Vue.use(VueResource);
 
 Vue.config.productionTip = false
 
-const token = localStorage.getItem('user-token')
-if (token) {
-  //axios.defaults.headers.common['Authorization'] = token
-}
-
+Vue.http.interceptors.push((request, next) => {
+  request.headers.set('Authorization', store.state.user.token)
+  next()
+})
+ 
 new Vue({
   router,
   store,

@@ -30,6 +30,6 @@ app.get('/', function (req, res) {
 
 let counter = 0;
 app.get('/secure-data', middleware.checkToken, function (req, res) {
-    res.send({ message: 'User Home Page', counter });
+    res.status(200).json({ message: 'User Home Page', counter });
     counter++;
 });

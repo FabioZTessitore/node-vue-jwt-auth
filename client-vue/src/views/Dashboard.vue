@@ -1,19 +1,18 @@
 <template>
-    <div>
-        <h1>This page is protected by auth</h1>
+    <div class="dashboard">
+        <h1 class="heading-primary">This page is protected by auth</h1>
 
-        <p>You are {{ foo }}</p>
+        <p>You are {{ user }}</p>
 
         <button @click="load">Click to load secure data</button>
-        <p>{{ msg }}</p>
-        <p>{{ counter }}</p>
+
+        <p>Message: {{ msg }}</p>
+        <p>Counter: {{ counter }}</p>
     </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
-// import axios from 'axios'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     data () {
@@ -24,32 +23,22 @@ export default {
     },
 
     computed: {
-        ...mapGetters({
-            foo: 'user'
-        })
+        ...mapGetters([
+            'user'
+        ])
     },
 
     methods: {
+        ...mapActions([
+            'secure_data'
+        ]),
+
         load () {
-            return new Promise( (resolve) => {
-                resolve()
-                /*axios({
-                    url: '/secure-data',
-                    method: 'GET'
-                }).then( (resp) => {
-                    console.log(resp.data)
-                    this.msg = resp.data.message
-                    this.counter = resp.data.counter
-                    resolve(resp)
-                }).catch( (err) => {
-                    console.log('catch', err)
-                })*/
+            this.secure_data().then(data => {
+                this.msg = data.message
+                this.counter = data.counter
             })
         }
-    },
-
-    created () {
-        console.log(this.foo)
     }
 }
 </script>

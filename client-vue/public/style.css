@@ -121,6 +121,18 @@ body {
   background-color: #792243;
   color: #eee; }
 
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 80vh;
+  background-color: #792243;
+  color: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
 .nav {
   display: flex;
   justify-content: space-evenly;
@@ -131,11 +143,11 @@ body {
     margin-right: auto; }
   .nav .menu {
     display: flex;
-    justify-content: space-between;
-    width: 10%; }
+    justify-content: space-between; }
   .nav__link:link, .nav__link:visited {
     text-decoration: none;
-    color: #2c3e50; }
+    color: #2c3e50;
+    margin-right: 3rem; }
   .nav__link.router-link-exact-active {
     color: #42b983; }
 

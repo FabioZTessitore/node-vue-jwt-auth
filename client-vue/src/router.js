@@ -5,7 +5,6 @@ import Signup from './views/Signup.vue'
 import Login from './views/Login.vue'
 import Dashboard from './views/Dashboard.vue'
 
-/*
 import store from './store/store'
 
 const ifAuthenticated = (to, from, next) => {
@@ -14,9 +13,8 @@ const ifAuthenticated = (to, from, next) => {
     return
   }
 
-  next('/')
+  next('/login')
 }
-*/
 
 Vue.use(Router)
 
@@ -43,7 +41,7 @@ export default new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
-      //beforeEnter: ifAuthenticated
+      beforeEnter: ifAuthenticated
     }
   ]
 })

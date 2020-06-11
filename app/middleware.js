@@ -8,6 +8,7 @@ const checkToken = (req, res, next) => {
     }
 
     if (!token) {
+        res.status(401);
         return  res.json({
             success: false,
             message: 'Auth token is not supplied'
@@ -16,7 +17,7 @@ const checkToken = (req, res, next) => {
 
     jwt.verify(token, config.secret, (err, decoded) => {
         if (err) {
-            return res.status(401).send({
+            return res.status(401).json({
                 success: false,
                 message: 'Token is not valid'
             });
