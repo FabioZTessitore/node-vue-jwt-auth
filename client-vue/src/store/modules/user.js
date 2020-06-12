@@ -60,11 +60,17 @@ const actions = {
         commit('auth_success', { token: data.token, user: data.user })
         dispatch('setLogoutTimer', data.expiresIn)
         localStorage.setItem('user-token', data.token)
+        const now = new Date()
+        const expirationDate = new Date(now.getTime() + data.expiresIn*1000)
+        localStorage.setItem('user-token-expirationDate', expirationDate)
+        localStorage.setItem('user-id', data.user.id)
         resolve('ok')
       })
       .catch( err => {
         commit('auth_error')
         localStorage.removeItem('user-token')
+        localStorage.removeItem('user-token-expirationDate')
+        localStorage.removeItem('user-id')
         reject(err.body)
       })
     })
@@ -74,6 +80,43 @@ const actions = {
       commit('auth_logout')
       localStorage.removeItem('user-token')
       router.replace('/login')
+  },
+
+  'tryLogin': ({ commit }) => {
+    console.log('trylogin')
+    const expirationTime = localStorage.getItem('user-token-expirationDate')
+    const now = new Date()
+    if (now >= expirationTime) {
+      return
+    }
+    const token = localStorage.getItem('user-token')
+    console.log(token)
+    if (!token) {
+      return
+    }
+    const userId = localStorage.getItem('user-id')
+    commit('auth_success', {
+      token: token,
+      user: {
+        id: userId
+      }
+    })
+
+    Vue.http.get('/userdata/'+userId)
+      .then(response => {
+        console.log('response', response)
+        return response.json()
+      })
+      .then(data => {
+        console.log('json response', data)
+        commit('auth_success', {
+          token: token,
+          user: data.user
+        })
+
+        router.replace('/dashboard')
+      })
+    
   },
 
   'secure_data': () => {

@@ -7,9 +7,21 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 import NavigationMenu from '@/components/NavigationMenu.vue'
 
 export default {
+  methods: {
+    ...mapActions([
+      'tryLogin'
+    ])
+  },
+
+  created () {
+    this.tryLogin()
+  },
+
   components: {
     appNavigationMenu: NavigationMenu
   }
