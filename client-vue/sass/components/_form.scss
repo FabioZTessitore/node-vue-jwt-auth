@@ -27,11 +27,12 @@
         }
 
         &::-moz-placeholder {
-            color: red;
+            color: $color-grey;
+            font-weight: 400;
         }
 
         &::-webkit-input-placeholder {
-            color: $color-grey-light-2;
+            color: $color-grey;
             font-weight: 400;
         }
     }

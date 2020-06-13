@@ -2,8 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-const middleware = require('./app/middleware');
-
 const userRoutes = require('./app/routes/user');
 
 const app = express();
@@ -26,10 +24,4 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/client-vue/dist/index.html')
-});
-
-let counter = 0;
-app.get('/secure-data', middleware.checkToken, function (req, res) {
-    res.status(200).json({ message: 'User Home Page', counter });
-    counter++;
 });

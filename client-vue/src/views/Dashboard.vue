@@ -1,13 +1,21 @@
 <template>
     <div class="dashboard">
-        <h1 class="heading-primary">This page is protected by auth</h1>
 
-        <p>You are {{ user }}</p>
+        <div class="u-center-text u-margin-bottom-big">
+            <h1 class="heading-primary">This page is protected</h1>
+        </div>
 
-        <button @click="load">Click to load secure data</button>
+        <div class="u-center-text u-margin-bottom-medium">
+            <p class="user-info">You are {{ user }}</p>
+        </div>
 
-        <p>Message: {{ msg }}</p>
-        <p>Counter: {{ counter }}</p>
+        <div class="u-center-text u-margin-bottom-small">
+            <button class="btn btn--primary" @click="load">Click to load secure data</button>
+        </div>
+
+        <div class="u-center-text" v-if="counter">
+            <p class="message">{{ message }}</p>
+        </div>
     </div>
 </template>
 
@@ -17,15 +25,18 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     data () {
         return {
-            msg: '',
-            counter: 0
+            counter: ''
         }
     },
 
     computed: {
         ...mapGetters([
             'user'
-        ])
+        ]),
+
+        message () {
+            return 'Server counter is ' + this.counter
+        }
     },
 
     methods: {
@@ -35,7 +46,6 @@ export default {
 
         load () {
             this.secure_data().then(data => {
-                this.msg = data.message
                 this.counter = data.counter
             })
         }

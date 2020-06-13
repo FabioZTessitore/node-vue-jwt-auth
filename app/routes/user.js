@@ -106,4 +106,11 @@ router.get('/userdata/:userId', middleware.checkToken, function (req, res) {
     });
 });
 
+let counter = 0;
+router.get('/secure-data', middleware.checkToken, function (req, res) {
+    counter++;
+    res.status(200).json({ counter });
+});
+
+
 module.exports = router;

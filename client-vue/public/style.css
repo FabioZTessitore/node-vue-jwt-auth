@@ -9,7 +9,8 @@ html {
   font-size: 62.5%; }
 
 body {
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  background-color: #fefefe; }
 
 body {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -19,18 +20,32 @@ body {
   color: #2c3e50; }
 
 .heading-primary {
-  font-size: 6rem;
+  font-size: 8rem;
   font-weight: 200; }
 
 .heading-secondary {
   font-size: 3.5rem;
   font-weight: 200; }
 
+.user-info {
+  font-size: 2rem;
+  font-family: monospace; }
+
+.message {
+  text-transform: uppercase;
+  font-size: 1.8rem; }
+
 .u-center-text {
   text-align: center; }
 
 .u-margin-bottom-big {
   margin-bottom: 8rem; }
+
+.u-margin-bottom-medium {
+  margin-bottom: 6rem; }
+
+.u-margin-bottom-small {
+  margin-bottom: 4rem; }
 
 .btn, .btn:link, .btn:visited {
   text-transform: uppercase;
@@ -86,7 +101,7 @@ body {
   padding: 1.5rem 2rem;
   border-radius: 2px;
   border: none;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(254, 254, 254, 0.5);
   border-bottom: 3px solid transparent;
   width: 100%;
   display: block; }
@@ -97,9 +112,10 @@ body {
     .form__input:focus:invalid {
       border-bottom: 3px solid #792243; }
   .form__input::-moz-placeholder {
-    color: red; }
+    color: #777;
+    font-weight: 400; }
   .form__input::-webkit-input-placeholder {
-    color: #999;
+    color: #777;
     font-weight: 400; }
 
 .form__label {
@@ -121,18 +137,6 @@ body {
   background-color: #792243;
   color: #eee; }
 
-.loading {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 80vh;
-  background-color: #792243;
-  color: #eee;
-  display: flex;
-  justify-content: center;
-  align-items: center; }
-
 .nav {
   display: flex;
   justify-content: space-evenly;
@@ -150,6 +154,9 @@ body {
     margin-right: 3rem; }
   .nav__link.router-link-exact-active {
     color: #42b983; }
+
+.page {
+  padding: 2rem; }
 
 .login-form {
   width: 40%;
