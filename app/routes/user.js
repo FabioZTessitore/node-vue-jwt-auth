@@ -83,8 +83,9 @@ router.post('/login', function (req, res) {
     });
 });
 
-router.get('/userdata/:userId', middleware.checkToken, function (req, res) {
-    const userId = req.params.userId;
+router.get('/userdata', middleware.checkToken, function (req, res) {
+    const userId = req.decoded.id;
+    console.log(userId)
 
     User.findById(userId, function (err, user) {
         if (err) {

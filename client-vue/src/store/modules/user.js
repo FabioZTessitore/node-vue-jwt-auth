@@ -3,7 +3,7 @@ import router from '../../router';
 
 const state = {
   status: '',
-  token: '',//localStorage.getItem('user-token') || '',
+  token: '',
   user: {}
 };
 
@@ -63,14 +63,12 @@ const actions = {
         const now = new Date()
         const expirationDate = new Date(now.getTime() + data.expiresIn*1000)
         localStorage.setItem('user-token-expirationDate', expirationDate)
-        localStorage.setItem('user-id', data.user.id)
         resolve('ok')
       })
       .catch( err => {
         commit('auth_error')
         localStorage.removeItem('user-token')
         localStorage.removeItem('user-token-expirationDate')
-        localStorage.removeItem('user-id')
         reject(err.body)
       })
     })
@@ -79,6 +77,7 @@ const actions = {
   'auth_logout': ({ commit }) => {
       commit('auth_logout')
       localStorage.removeItem('user-token')
+      localStorage.removeItem('user-token-expirationDate')
       router.replace('/login')
   },
 
@@ -94,15 +93,13 @@ const actions = {
     if (!token) {
       return
     }
-    const userId = localStorage.getItem('user-id')
     commit('auth_success', {
       token: token,
-      user: {
-        id: userId
-      }
+      user: {}
     })
 
-    Vue.http.get('/userdata/'+userId)
+    
+    Vue.http.get('/userdata')
       .then(response => {
         console.log('response', response)
         return response.json()
@@ -113,10 +110,11 @@ const actions = {
           token: token,
           user: data.user
         })
-
         router.replace('/dashboard')
       })
-    
+      .catch( () => {
+        commit('auth_logout')
+      })
   },
 
   'secure_data': () => {
