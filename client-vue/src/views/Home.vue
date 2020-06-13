@@ -1,19 +1,12 @@
 <template>
-  <div class="home">
-    <h1>Home Page</h1>
+  <div class="home page">
 
-    <app-sign-up></app-sign-up>
+    <div class="u-center-text u-margin-bottom-big">
+      <h1 class="heading-primary">Home Page</h1>
+    </div>
+
+    <div class="u-center-text">
+      <h2 class="heading-secondary">Node Vue JWT Application</h2>
+    </div>
   </div>
 </template>
-
-<script>
-import Signup from '@/components/Signup.vue'
-
-export default {
-  name: 'home',
-
-  components: {
-    appSignUp: Signup
-  }
-}
-</script>
