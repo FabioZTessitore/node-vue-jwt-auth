@@ -36,12 +36,35 @@ const mutations = {
     state.status = ''
     state.token = ''
     state.user = {}
+  },
+
+  update_token: (state, token) => {
+    state.token = token
   }
 };
 
 const actions = {
-  'setLogoutTimer': ({ commit }, expirationTime) => {
-    setTimeout(() => commit('auth_logout'), expirationTime * 1000)
+  'refreshToken': ({ commit, dispatch }, expirationTime) => {
+    setTimeout(() => {
+      console.log(new Date(), 'request new token')
+      Vue.http.post('/refresh-token', { refreshToken: localStorage.getItem('refresh-token') })
+        .then(response => {
+          return response.json()
+        })
+        .then(data => {
+          commit('update_token', data.token)
+          console.log('new token is ', data.token)
+          console.log('new token request in ', expirationTime*1000)
+          dispatch('refreshToken', expirationTime)
+          //setTimeout(() => {
+          //}, expirationTime * 1000)
+        })
+        .catch((err) => {
+          console.log(err)
+          commit('auth_logout')
+          router.replace('/login')
+        })
+    }, expirationTime * 1000)
   },
 
   'auth_request': ({ commit, dispatch }, { action, user }) => {
@@ -52,14 +75,15 @@ const actions = {
       
       Vue.http.post(action, user)
       .then(response => {
-        console.log('response', response)
         return response.json()
       })
       .then(data => {
         console.log('json response', data)
         commit('auth_success', { token: data.token, user: data.user })
-        dispatch('setLogoutTimer', data.expiresIn)
+        dispatch('refreshToken', data.expiresIn*.9)
+        console.log('new token request in ', data.expiresIn*1000*.9)
         localStorage.setItem('user-token', data.token)
+        localStorage.setItem('refresh-token', data.refreshToken)
         const now = new Date()
         const expirationDate = new Date(now.getTime() + data.expiresIn*1000)
         localStorage.setItem('user-token-expirationDate', expirationDate)
@@ -78,6 +102,7 @@ const actions = {
       commit('auth_logout')
       localStorage.removeItem('user-token')
       localStorage.removeItem('user-token-expirationDate')
+      localStorage.removeItem('refresh-token')
       router.replace('/login')
   },
 

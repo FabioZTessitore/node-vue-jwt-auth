@@ -8,7 +8,9 @@ const middleware = require('../middleware');
 
 const User = require('../models/user');
 
-const expiresIn = 3600; /* 1h */
+const timeUnit = 5;                  // 1h
+const expiresIn = timeUnit;             // 1h
+const refreshExpiresIn = timeUnit * 5;  // 5h
 
 router.post('/signup', function (req, res) {
     const email = req.body.email;
@@ -21,14 +23,14 @@ router.post('/signup', function (req, res) {
             res.json({ auth: false, msg: 'Cannot register the user.' });
             return;
         }
-  
+
         if (user) {
             console.log('user already in db');
             res.status(401);
             res.json({ auth: false, msg: 'Email already in db.' });
             return;
         }
-  
+
         var newUser = new User();
         newUser.email = email;
         newUser.password = newUser.generateHash(password);
@@ -43,7 +45,7 @@ router.post('/signup', function (req, res) {
   
             console.log(user);
             const token = jwt.sign({ id: user._id }, config.secret, { expiresIn: expiresIn });
-            const refreshToken = jwt.sign({ id: user._id, type: 'refresh' }, config.secret, { expiresIn: expiresIn });
+            const refreshToken = jwt.sign({ id: user._id }, config.secret, { expiresIn: refreshExpiresIn });
             res.status(200).json({ auth: true, token: token, refreshToken: refreshToken, expiresIn: expiresIn, user: { id: user._id, email: user.email } });
         });
     });
@@ -78,8 +80,37 @@ router.post('/login', function (req, res) {
 
         console.log(user);
         const token = jwt.sign({ id: user._id }, config.secret, { expiresIn: expiresIn });
-        const refreshToken = jwt.sign({ id: user._id, type: 'refresh' }, config.secret, { expiresIn: expiresIn });
+        const refreshToken = jwt.sign({ id: user._id }, config.secret, { expiresIn: refreshExpiresIn });
+        console.log(new Date(), 'refresh token generated with ', refreshExpiresIn);
         res.status(200).json({ auth: true, token: token, refreshToken: refreshToken, expiresIn: expiresIn, user: { id: user._id, email: user.email } });
+    });
+});
+
+router.post('/refresh-token', function (req, res) {
+    console.log(new Date(), ' /refresh-token');
+
+    const refreshToken = req.body.refreshToken;
+
+    if (!refreshToken) {
+        res.status(401);
+        return  res.json({
+            auth: false,
+            message: 'Auth token is not supplied'
+        });
+    }
+    
+    jwt.verify(refreshToken, config.secret, (err, decoded) => {
+        if (err) {
+            return res.status(401).json({
+                auth: false,
+                message: 'Token is not valid'
+            });
+        } else {
+            const userId = decoded.id;
+
+            const token = jwt.sign({ id: userId }, config.secret, { expiresIn: expiresIn });
+            res.json({ auth: true, token: token });
+        }
     });
 });
 
