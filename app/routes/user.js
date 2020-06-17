@@ -8,7 +8,7 @@ const middleware = require('../middleware');
 
 const User = require('../models/user');
 
-const timeUnit = 5;                  // 1h
+const timeUnit = 3600;                  // 1h
 const expiresIn = timeUnit;             // 1h
 const refreshExpiresIn = timeUnit * 5;  // 5h
 

@@ -56,8 +56,6 @@ const actions = {
           console.log('new token is ', data.token)
           console.log('new token request in ', expirationTime*1000)
           dispatch('refreshToken', expirationTime)
-          //setTimeout(() => {
-          //}, expirationTime * 1000)
         })
         .catch((err) => {
           console.log(err)
