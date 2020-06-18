@@ -17,6 +17,10 @@
                     <label for="password" class="form__label">Password</label>
                 </div>
 
+                <div class="form__group" v-if="error">
+                    <p class="form__error">{{ error }}</p>
+                </div>
+
                 <div class="form__group u-center-text">
                     <button class="btn btn--primary" type="submit">Login</button>
                 </div>
@@ -32,7 +36,8 @@ export default {
     data () {
         return {
             email: '',
-            password: ''
+            password: '',
+            error: ''
         }
     },
 
@@ -41,17 +46,15 @@ export default {
             'auth_request'
         ]),
 
-        login: function () {
+        login () {
             this.auth_request({ action: '/login', user: {
                 email: this.email,
                 password: this.password
             }})
-            .then((msg) => {
-                console.log(msg)
+            .then( () => {
                 this.$router.push('/dashboard')
             })
             .catch( err => {
-                console.log(err)
                 this.error = err.msg
             })
         }

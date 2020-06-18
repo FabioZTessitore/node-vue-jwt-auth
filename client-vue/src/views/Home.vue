@@ -6,7 +6,7 @@
     </div>
 
     <div class="u-center-text">
-      <h2 class="heading-secondary">Node Vue JWT Application</h2>
+      <h2 class="heading-secondary">Node JWT Vue Application</h2>
     </div>
   </div>
 </template>

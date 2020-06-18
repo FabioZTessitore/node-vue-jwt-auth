@@ -69,12 +69,10 @@ export default {
                 email: this.email,
                 password: this.password
             }})
-            .then((msg) => {
-                console.log(msg)
+            .then( () => {
                 this.$router.push('/dashboard')
             })
             .catch( err => {
-                console.log(err)
                 this.error = err.msg
             })
         }
