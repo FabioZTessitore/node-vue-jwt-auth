@@ -45,7 +45,7 @@ export default {
         ]),
 
         load () {
-            this.secure_data().then(data => {
+            this.secure_data().then( data => {
                 this.counter = data.counter
             })
         }

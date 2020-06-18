@@ -1,6 +1,6 @@
 <template>
     <div id="nav" class="nav">
-        <div class="brand">Node Vue JWT</div>
+        <div class="brand">Node JWT Vue</div>
         <div class="menu">
             <router-link tag="a" class="nav__link" to="/dashboard" v-if="isLoggedIn">Home</router-link>
             <router-link tag="a" class="nav__link" to="/" v-else>Home</router-link>
@@ -23,7 +23,6 @@ export default {
 
     methods: {
         logout () {
-            console.log('logout')
             this.$store.dispatch('auth_logout')
         }
     }
